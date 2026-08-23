@@ -1,4 +1,6 @@
 import PricingCard from "@/components/pricing/PricingCard";
+import PricingFAQ from "@/components/pricing/PricingFAQ";
+import TrustBadge from "@/components/pricing/TrustBadge";
 
 const PRICING_PLANS = [
   {
@@ -61,13 +63,13 @@ const PRICING_PLANS = [
 
 export default function PricingPage() {
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16 flex flex-col items-center justify-center min-h-[calc(100vh-8rem)]">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24 flex flex-col items-center justify-center">
       {/* Header Section */}
-      <div className="text-center max-w-2xl space-y-3 mb-12">
+      <div className="text-center max-w-2xl space-y-3 mb-16">
         <span className="px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full text-purple-600 dark:text-purple-400 text-xs font-semibold uppercase tracking-wider">
           Flexible Pricing
         </span>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
           Simple, transparent plans for your forms
         </h1>
         <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
@@ -81,6 +83,16 @@ export default function PricingPage() {
         {PRICING_PLANS.map((plan, index) => (
           <PricingCard key={index} {...plan} />
         ))}
+      </div>
+
+      {/* Trust Badges with proper top margin */}
+      <div className="w-full mt-24">
+        <TrustBadge />
+      </div>
+
+      {/* FAQ Section with proper top margin */}
+      <div className="w-full mt-24">
+        <PricingFAQ />
       </div>
     </div>
   );
