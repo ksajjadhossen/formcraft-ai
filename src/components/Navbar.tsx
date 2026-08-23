@@ -10,7 +10,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="w-full border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+    <nav className="w-full border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link
           href="/"
@@ -18,6 +18,7 @@ export default function Navbar() {
         >
           FormCraft AI
         </Link>
+
         <div className="flex items-center gap-6">
           <Link
             href="/dashboard"
@@ -40,7 +41,6 @@ export default function Navbar() {
             + Create
           </Link>
 
-          {/* Magic UI Animated Theme Toggler */}
           <AnimatedThemeToggler />
 
           {isLoaded && (

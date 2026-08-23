@@ -6,7 +6,7 @@ import RecentForms from "@/components/dashboard/RecentForms";
 
 export default function DashboardPage() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-6 md:space-y-8">
       {/* Dashboard Header Component */}
       <DashboardHeader />
 

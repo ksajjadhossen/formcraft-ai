@@ -43,13 +43,12 @@ export default function CreateFormPage() {
   };
 
   return (
-    // max-w-2xl থেকে বাড়িয়ে max-w-3xl করা হয়েছে যাতে মেইন ডিভটি বড় দেখায়
-    <div className="w-full max-w-3xl py-10 mx-auto px-4 flex flex-col items-center justify-center min-h-[82vh]">
+    <div className="flex-1 w-full max-w-3xl py-12 mx-auto px-4 flex flex-col items-center justify-center mb-12">
       {/* Header Component */}
       <CreateFormHeader />
 
       {/* Main Glassy Card with compact border-radius (rounded-xl) */}
-      <div className="w-full p-6 md:p-8 bg-white/80 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800/80 rounded-xl shadow-2xl backdrop-blur-xl transition-all duration-300">
+      <div className="w-full p-6 md:p-8 bg-white/80 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800/80 rounded-xl shadow-2xl backdrop-blur-xl transition-all duration-300 mt-6">
         <form onSubmit={handleGenerate} className="space-y-6">
           <div className="space-y-2">
             <label className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
@@ -75,7 +74,7 @@ export default function CreateFormPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-3 px-6 rounded-xl shadow-lg shadow-purple-600/25 active:scale-[0.98] hover:shadow-purple-500/40 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
+            className="w-full bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-3 px-6 rounded-xl shadow-lg shadow-purple-600/25 active:scale-[0.98] hover:shadow-purple-500/40 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
           >
             {loading ? (
               <>

@@ -19,15 +19,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className="h-screen overflow-hidden"
-    >
-      <body
-        className={`${inter.className} bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 h-screen flex flex-col justify-between overflow-hidden antialiased transition-colors duration-200`}
-      >
-        <ClerkProvider>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${inter.className} bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col antialiased transition-colors duration-200`}
+        >
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
@@ -35,13 +31,11 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Navbar />
-            <main className="flex-1 flex flex-col justify-center items-center px-4 overflow-y-auto">
-              {children}
-            </main>
+            <main className="flex-1 flex flex-col w-full">{children}</main>
             <Footer />
           </ThemeProvider>
-        </ClerkProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
