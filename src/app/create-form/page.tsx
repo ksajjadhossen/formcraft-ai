@@ -29,13 +29,24 @@ export default function CreateFormPage() {
         body: JSON.stringify({ prompt }),
       });
 
-      const data = await res.json();
+      // Handle the response and parse JSON safely
+      const responseText = await res.text();
+      let data;
+      try {
+        data = responseText ? JSON.parse(responseText) : {};
+      } catch {
+        console.error("Non-JSON response received:", responseText);
+        throw new Error("Server returned an invalid response");
+      }
+
       if (res.ok && data.formId) {
+        // Navigate to the newly created form's dashboard
         router.push(`/dashboard`);
       } else {
         alert(data.error || "Failed to generate form");
       }
-    } catch {
+    } catch (err) {
+      console.error(err);
       alert("An error occurred during generation");
     } finally {
       setLoading(false);
@@ -79,7 +90,7 @@ export default function CreateFormPage() {
             {loading ? (
               <>
                 <Wand2 className="w-4 h-4 animate-spin" />
-                <span>Generating Form...</span>
+                <span>Generating Form with AI...</span>
               </>
             ) : (
               <>

@@ -1,10 +1,42 @@
 import { FileText, Users, TrendingUp, Zap } from "lucide-react";
 import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
+import { prisma } from "@/lib/db/prisma";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import StatsCard from "@/components/dashboard/StatsCard";
 import RecentForms from "@/components/dashboard/RecentForms";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const { userId: clerkId } = await auth();
+
+  let totalForms = 0;
+  let forms = [];
+
+  if (clerkId) {
+    const user = await prisma.user.findUnique({
+      where: { clerkId },
+      include: {
+        forms: {
+          orderBy: { createdAt: "desc" },
+          include: {
+            responses: true,
+          },
+        },
+      },
+    });
+
+    if (user) {
+      forms = user.forms;
+      totalForms = forms.length;
+    }
+  }
+
+  // Calculate total responses across all forms
+  const totalResponses = forms.reduce(
+    (acc, form) => acc + form.responses.length,
+    0,
+  );
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-6 md:space-y-8">
       {/* Dashboard Header Component */}
@@ -14,17 +46,17 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         <StatsCard
           title="Total Forms"
-          value="0"
+          value={totalForms.toString()}
           subtitle="All created forms"
           icon={<FileText className="w-4 h-4 text-purple-500" />}
-          badge="+0% this month"
+          badge="Active"
         />
         <StatsCard
           title="Total Responses"
-          value="0"
+          value={totalResponses.toString()}
           subtitle="User submissions"
           icon={<Users className="w-4 h-4 text-blue-500" />}
-          badge="0 total"
+          badge="Total"
         />
         <StatsCard
           title="Completion Rate"
@@ -42,7 +74,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Improved Quick Generator Card */}
-        <div className="p-6 bg-gradient-to-br from-purple-900/90 via-slate-900 to-slate-950 border border-purple-500/20 rounded-xl text-white flex flex-col justify-between shadow-lg">
+        <div className="p-6 bg-linear-to-br from-purple-900/90 via-slate-900 to-slate-950 border border-purple-500/20 rounded-xl text-white flex flex-col justify-between shadow-lg">
           <div className="space-y-3">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-purple-500/20 border border-purple-400/30 rounded-md text-purple-300 text-xs font-semibold tracking-wide">
               <Zap className="w-3.5 h-3.5 fill-purple-300" /> AI Assistant
