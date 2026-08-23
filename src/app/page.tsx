@@ -10,14 +10,14 @@ const SUGGESTED_PROMPTS = [
   "Job application form with portfolio link & resume upload",
 ];
 
-export default function Home() {
+export default function CreateFormPage() {
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!prompt) return;
+    if (!prompt.trim()) return;
 
     setLoading(true);
     try {
@@ -41,9 +41,9 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full max-w-xl py-4 space-y-4 my-auto">
+    <div className="w-full max-w-xl py-6 mx-auto my-auto px-4 flex flex-col items-center justify-center min-h-[80vh]">
       {/* Title Header */}
-      <div className="text-center space-y-1.5">
+      <div className="text-center space-y-2 mb-6">
         <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-purple-500/10 border border-purple-500/20 text-purple-600 dark:text-purple-400 text-xs font-medium backdrop-blur-md">
           <Sparkles className="w-3 h-3" />
           <span>AI Powered Generation</span>
@@ -57,9 +57,9 @@ export default function Home() {
         </p>
       </div>
 
-      {/* Main Card */}
-      <div className="p-5 md:p-6 bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-purple-500/20 rounded-xl shadow-xl backdrop-blur-2xl transition-colors duration-200">
-        <form onSubmit={handleGenerate} className="space-y-3">
+      {/* Main Glassy Card (कम border-radius: rounded-xl) */}
+      <div className="w-full p-5 md:p-6 bg-white/80 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800/80 rounded-xl shadow-2xl backdrop-blur-xl transition-all duration-300">
+        <form onSubmit={handleGenerate} className="space-y-4">
           <div className="space-y-1.5">
             <label className="text-[11px] font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
               Form Prompt
@@ -68,7 +68,7 @@ export default function Home() {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="E.g., Event registration form with name, email, dietary preferences..."
-              className="w-full h-24 p-3 text-xs bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-md text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 transition-all duration-200 resize-none shadow-inner"
+              className="w-full h-24 p-3 text-xs bg-slate-50/50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 rounded-lg text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/80 focus:ring-2 focus:ring-purple-500/20 transition-all duration-200 resize-none shadow-inner"
               required
             />
           </div>
@@ -84,7 +84,7 @@ export default function Home() {
                   key={idx}
                   type="button"
                   onClick={() => setPrompt(suggestion)}
-                  className="text-[11px] text-left px-2.5 py-1 bg-slate-100 dark:bg-slate-800/50 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/60 rounded-md text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all duration-150"
+                  className="text-[11px] text-left px-2.5 py-1 bg-slate-100 dark:bg-slate-800/40 hover:bg-slate-200 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-700/50 rounded-md text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all duration-150 active:scale-95"
                 >
                   {suggestion}
                 </button>
@@ -92,11 +92,11 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Button */}
+          {/* Button with smooth Click Effect & compact rounded-lg */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-2 px-4 rounded-md shadow-md shadow-purple-600/20 active:scale-[0.99] transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-xs"
+            className="w-full mt-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-2.5 px-4 rounded-lg shadow-lg shadow-purple-600/25 active:scale-[0.97] hover:shadow-purple-500/40 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-xs"
           >
             {loading ? (
               <>
