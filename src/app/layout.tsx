@@ -25,7 +25,7 @@ export default function RootLayout({
       className="h-screen overflow-hidden"
     >
       <body
-        className={`${inter.className} bg-slate-950 text-slate-100 h-screen overflow-hidden flex flex-col justify-between antialiased`}
+        className={`${inter.className} bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 h-screen flex flex-col justify-between overflow-hidden antialiased transition-colors duration-200`}
       >
         <ClerkProvider>
           <ThemeProvider
@@ -35,7 +35,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Navbar />
-            <main className="flex-1 flex flex-col justify-center items-center overflow-hidden">
+            <main className="flex-1 flex flex-col justify-center items-center px-4 overflow-y-auto">
               {children}
             </main>
             <Footer />
