@@ -20,26 +20,30 @@ export default function Navbar() {
         </Link>
 
         <div className="flex items-center gap-6">
-          <Link
-            href="/dashboard"
-            className={`text-xs font-medium transition-colors ${
-              pathname === "/dashboard"
-                ? "text-purple-600 dark:text-purple-400 font-semibold"
-                : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
-            }`}
-          >
-            Dashboard
-          </Link>
-          <Link
-            href="/create-form"
-            className={`text-xs font-medium transition-colors ${
-              pathname === "/create-form"
-                ? "text-purple-600 dark:text-purple-400 font-semibold"
-                : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
-            }`}
-          >
-            + Create
-          </Link>
+          {isLoaded && isSignedIn && (
+            <>
+              <Link
+                href="/dashboard"
+                className={`text-xs font-medium transition-colors ${
+                  pathname === "/dashboard"
+                    ? "text-purple-600 dark:text-purple-400 font-semibold"
+                    : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+                }`}
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/create-form"
+                className={`text-xs font-medium transition-colors ${
+                  pathname === "/create-form"
+                    ? "text-purple-600 dark:text-purple-400 font-semibold"
+                    : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+                }`}
+              >
+                + Create
+              </Link>
+            </>
+          )}
 
           <AnimatedThemeToggler />
 
