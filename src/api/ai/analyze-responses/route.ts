@@ -5,15 +5,6 @@ import { prisma } from "@/lib/db/prisma";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
-type FormResponseItem = {
-  answers: unknown;
-};
-
-type FormQuestionItem = {
-  id: string;
-  label: string;
-};
-
 export async function POST(req: Request) {
   try {
     const { userId: clerkId } = await auth();
@@ -35,12 +26,11 @@ export async function POST(req: Request) {
     }
 
     const formattedData = form.responses
-      .map((r: FormResponseItem, idx: number) => {
+      .map((r: any, idx: number) => {
         const answersObj = (r.answers || {}) as Record<string, string>;
         const answersText = form.questions
           .map(
-            (q: FormQuestionItem) =>
-              `Q: ${q.label} -> Answer: ${answersObj[q.id] || "N/A"}`,
+            (q: any) => `Q: ${q.label} -> Answer: ${answersObj[q.id] || "N/A"}`,
           )
           .join("\n");
         return `Response #${idx + 1}:\n${answersText}`;
