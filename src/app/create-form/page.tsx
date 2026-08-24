@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, Wand2 } from "lucide-react";
 import CreateFormHeader from "@/components/create-form/CreateFormHeader";
 import PromptSuggestions from "@/components/create-form/PromptSuggestions";
+import FormSuccessModal from "@/components/create-form/FormSuccessModal";
 
 const SUGGESTED_PROMPTS = [
   "Coffee shop feedback form with ratings & review",
@@ -15,6 +16,7 @@ const SUGGESTED_PROMPTS = [
 export default function CreateFormPage() {
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
+  const [generatedFormId, setGeneratedFormId] = useState<string | null>(null);
   const router = useRouter();
 
   const handleGenerate = async (e: React.FormEvent) => {
@@ -29,19 +31,11 @@ export default function CreateFormPage() {
         body: JSON.stringify({ prompt }),
       });
 
-      // Handle the response and parse JSON safely
       const responseText = await res.text();
-      let data;
-      try {
-        data = responseText ? JSON.parse(responseText) : {};
-      } catch {
-        console.error("Non-JSON response received:", responseText);
-        throw new Error("Server returned an invalid response");
-      }
+      const data = responseText ? JSON.parse(responseText) : {};
 
       if (res.ok && data.formId) {
-        // Navigate to the newly created form's dashboard
-        router.push(`/dashboard`);
+        setGeneratedFormId(data.formId);
       } else {
         alert(data.error || "Failed to generate form");
       }
@@ -54,11 +48,9 @@ export default function CreateFormPage() {
   };
 
   return (
-    <div className="flex-1 w-full max-w-3xl py-12 mx-auto px-4 flex flex-col items-center justify-center mb-12">
-      {/* Header Component */}
+    <div className="flex-1 w-full max-w-3xl py-12 mx-auto px-4 flex flex-col items-center justify-center mb-12 relative">
       <CreateFormHeader />
 
-      {/* Main Glassy Card with compact border-radius (rounded-xl) */}
       <div className="w-full p-6 md:p-8 bg-white/80 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800/80 rounded-xl shadow-2xl backdrop-blur-xl transition-all duration-300 mt-6">
         <form onSubmit={handleGenerate} className="space-y-6">
           <div className="space-y-2">
@@ -70,22 +62,20 @@ export default function CreateFormPage() {
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="E.g., Event registration form with name, email, dietary preferences..."
               rows={5}
-              className="w-full p-4 text-sm bg-slate-50/50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 rounded-xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/80 focus:ring-2 focus:ring-purple-500/20 transition-all duration-200 resize-none shadow-inner"
+              className="w-full p-4 text-sm bg-slate-50/50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 rounded-xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-500/80 focus:ring-2 focus:ring-purple-500/25 transition-all duration-200 resize-none shadow-inner"
               required
             />
           </div>
 
-          {/* Suggestions Component */}
           <PromptSuggestions
             suggestions={SUGGESTED_PROMPTS}
             onSelect={(selected) => setPrompt(selected)}
           />
 
-          {/* Button with Click Effect & rounded-xl */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-3 px-6 rounded-xl shadow-lg shadow-purple-600/25 active:scale-[0.98] hover:shadow-purple-500/40 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
+            className="w-full bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-3 px-6 rounded-xl shadow-lg shadow-purple-600/25 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
           >
             {loading ? (
               <>
@@ -101,6 +91,18 @@ export default function CreateFormPage() {
           </button>
         </form>
       </div>
+
+      {/* Reusable Success Modal Component */}
+      {generatedFormId && (
+        <FormSuccessModal
+          formId={generatedFormId}
+          onClose={() => {
+            setGeneratedFormId(null);
+            router.push("/dashboard");
+          }}
+          onGoToDashboard={() => router.push("/dashboard")}
+        />
+      )}
     </div>
   );
 }
