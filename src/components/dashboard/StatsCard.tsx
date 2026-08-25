@@ -1,40 +1,28 @@
-import { ReactNode } from "react";
-
-interface StatsCardProps {
-  title: string;
-  value: string;
-  subtitle: string;
-  icon: ReactNode;
-  badge: string;
-}
-
 export default function StatsCard({
   title,
   value,
   subtitle,
   icon,
   badge,
-}: StatsCardProps) {
+}: any) {
   return (
-    <div className="p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xs transition-all hover:border-purple-500/30">
-      <div className="flex justify-between items-start">
-        <div className="p-2.5 bg-slate-100 dark:bg-slate-800/80 rounded-lg">
+    <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 shadow-sm transition-all flex flex-col justify-between space-y-4">
+      <div className="flex items-center justify-between">
+        <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10">
           {icon}
         </div>
-        <span className="text-[11px] font-medium px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-md border border-slate-200/50 dark:border-slate-700/50">
+        <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300 uppercase tracking-wider">
           {badge}
         </span>
       </div>
-      <div className="mt-4">
-        <h3 className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+      <div className="space-y-1">
+        <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">
           {title}
-        </h3>
-        <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">
+        </p>
+        <h4 className="text-2xl font-bold text-slate-900 dark:text-white">
           {value}
-        </p>
-        <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">
-          {subtitle}
-        </p>
+        </h4>
+        <p className="text-xs text-slate-500 dark:text-slate-400">{subtitle}</p>
       </div>
     </div>
   );
