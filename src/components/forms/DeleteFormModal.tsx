@@ -32,24 +32,26 @@ export default function DeleteFormModal({
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="p-2 rounded-lg bg-white/5 hover:bg-red-500/20 text-slate-300 hover:text-red-400 transition-colors"
+        className="p-2 rounded-lg bg-slate-100 dark:bg-white/5 hover:bg-red-500/20 text-slate-700 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 transition-colors"
         title="Delete Form"
       >
         <Trash2 className="w-4 h-4" />
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-          <div className="bg-slate-900 border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-6 shadow-2xl scale-100 animate-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 dark:bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-2xl max-w-md w-full p-6 space-y-6 shadow-2xl scale-100 animate-in zoom-in-95 duration-200">
             <div className="flex items-start gap-4">
-              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 shrink-0">
+              <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 shrink-0">
                 <AlertTriangle className="w-6 h-6" />
               </div>
               <div className="space-y-1">
-                <h3 className="text-lg font-bold text-white">Delete Form?</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                  Delete Form?
+                </h3>
+                <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                   Are you sure you want to delete{" "}
-                  <span className="text-white font-medium">
+                  <span className="text-slate-900 dark:text-white font-medium">
                     &quot;{formTitle}&quot;
                   </span>
                   ? This action cannot be undone.
@@ -62,7 +64,7 @@ export default function DeleteFormModal({
                 type="button"
                 disabled={isDeleting}
                 onClick={() => setIsOpen(false)}
-                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-medium transition-colors"
+                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors"
               >
                 Cancel
               </button>

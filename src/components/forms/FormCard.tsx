@@ -14,31 +14,31 @@ interface FormCardProps {
 
 export default function FormCard({ form }: FormCardProps) {
   return (
-    <div className="group relative bg-white/2 hover:bg-white/4 border border-white/10 hover:border-purple-500/30 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between space-y-6 shadow-2xl">
+    <div className="group relative bg-white dark:bg-slate-900 hover:border-purple-500/30 border border-slate-200 dark:border-white/10 rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between space-y-6 shadow-sm">
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+          <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400">
             <FileText className="w-5 h-5" />
           </div>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-slate-300">
-            <Layers className="w-3.5 h-3.5 text-purple-400" />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-xs font-medium text-slate-700 dark:text-slate-300">
+            <Layers className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
             {form.questions?.length || 0} Questions
           </span>
         </div>
 
         <div className="space-y-1">
-          <h3 className="text-lg font-semibold text-slate-100 group-hover:text-purple-300 transition-colors line-clamp-1">
+          <h3 className="text-base font-bold text-slate-900 dark:text-slate-100 group-hover:text-purple-600 dark:group-hover:text-purple-300 transition-colors line-clamp-1">
             {form.title}
           </h3>
-          <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+          <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
             {form.description || "No description provided for this form."}
           </p>
         </div>
       </div>
 
-      <div className="pt-4 border-t border-white/5 flex items-center justify-between text-xs text-slate-400">
+      <div className="pt-4 border-t border-slate-100 dark:border-white/5 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
         <div className="flex items-center gap-1.5">
-          <Calendar className="w-3.5 h-3.5 text-slate-500" />
+          <Calendar className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
           <span>{new Date(form.createdAt).toLocaleDateString()}</span>
         </div>
 
@@ -49,7 +49,7 @@ export default function FormCard({ form }: FormCardProps) {
           <Link
             href={`/forms/${form.id}`}
             target="_blank"
-            className="p-2 rounded-lg bg-white/5 hover:bg-purple-600/20 text-slate-300 hover:text-purple-300 transition-colors"
+            className="p-2 rounded-lg bg-slate-100 dark:bg-white/5 hover:bg-purple-600/20 text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-300 transition-colors"
             title="View Form"
           >
             <ArrowUpRight className="w-4 h-4" />
