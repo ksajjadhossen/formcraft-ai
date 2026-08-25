@@ -2,6 +2,7 @@ import { prisma } from "@/lib/db/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Inbox, Calendar, UserCheck } from "lucide-react";
+import ExportDropdown from "@/components/forms/ExportDropdown";
 
 interface ResponsesPageProps {
   params: Promise<{
@@ -57,18 +58,28 @@ export default async function FormResponsesPage({
             </p>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-3 rounded-xl flex items-center gap-3 shadow-sm">
-            <div className="w-10 h-10 bg-purple-100 dark:bg-purple-600/10 text-purple-600 dark:text-purple-400 rounded-lg flex items-center justify-center">
-              <Inbox className="w-5 h-5" />
+          {/* Right Side: Total Submissions & Export Dropdown */}
+          <div className="flex items-center gap-3">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-3 rounded-xl flex items-center gap-3 shadow-sm">
+              <div className="w-10 h-10 bg-purple-100 dark:bg-purple-600/10 text-purple-600 dark:text-purple-400 rounded-lg flex items-center justify-center">
+                <Inbox className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Total Submissions
+                </p>
+                <p className="text-lg font-bold text-slate-900 dark:text-white">
+                  {form.responses.length}
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
-                Total Submissions
-              </p>
-              <p className="text-lg font-bold text-slate-900 dark:text-white">
-                {form.responses.length}
-              </p>
-            </div>
+
+            {/* Export Dropdown Button Component */}
+            <ExportDropdown
+              formTitle={form.title}
+              responses={form.responses}
+              questions={form.questions}
+            />
           </div>
         </div>
 
