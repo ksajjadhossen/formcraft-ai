@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { FileText, Users, TrendingUp, Zap } from "lucide-react";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
@@ -6,8 +7,9 @@ import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import StatsCard from "@/components/dashboard/StatsCard";
 import RecentForms from "@/components/dashboard/RecentForms";
 import SidebarLayout from "@/components/dashboard/SidebarLayout";
+import Loader from "@/components/ui/Loader";
 
-export default async function DashboardPage() {
+async function DashboardContent() {
   const { userId: clerkId } = await auth();
 
   let totalForms = 0;
@@ -38,7 +40,6 @@ export default async function DashboardPage() {
     0,
   );
 
-  // ডাইনামিক কমপ্লিশন রেট হিসাব (যদি ফর্ম থাকে তবে তার ওপর ভিত্তি করে)
   const completionRate =
     totalForms > 0
       ? Math.min(Math.round((totalResponses / (totalForms * 5)) * 100), 100)
@@ -46,15 +47,11 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-(--bg-main) text-(--text-main) flex transition-colors duration-300">
-      {/* Left Sidebar */}
       <SidebarLayout />
 
-      {/* Main Content Area */}
       <main className="flex-1 px-6 sm:px-10 py-10 space-y-8 overflow-y-auto">
-        {/* Dashboard Header Component */}
         <DashboardHeader />
 
-        {/* Stats Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <StatsCard
             title="Total Forms"
@@ -79,13 +76,11 @@ export default async function DashboardPage() {
           />
         </div>
 
-        {/* Recent Forms & Quick Generator Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             <RecentForms forms={forms} />
           </div>
 
-          {/* Quick Generator Card */}
           <div className="p-6 bg-linear-to-br from-purple-600 via-purple-900 to-slate-900 dark:from-purple-900/90 dark:via-slate-900 dark:to-slate-950 border border-purple-500/20 rounded-2xl text-white flex flex-col justify-between shadow-xl backdrop-blur-xl">
             <div className="space-y-3">
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/20 dark:bg-purple-500/20 border border-white/30 dark:border-purple-400/30 rounded-md text-white dark:text-purple-300 text-xs font-semibold tracking-wide">
@@ -115,5 +110,13 @@ export default async function DashboardPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<Loader text="Loading Dashboard..." />}>
+      <DashboardContent />
+    </Suspense>
   );
 }

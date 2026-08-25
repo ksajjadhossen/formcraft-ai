@@ -75,11 +75,11 @@ export default function CreateFormPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-3 px-6 rounded-xl shadow-lg shadow-purple-600/25 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
+            className="w-full bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-3 px-6 rounded-xl shadow-lg shadow-purple-600/25 active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm relative overflow-hidden"
           >
             {loading ? (
               <>
-                <Wand2 className="w-4 h-4 animate-spin" />
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                 <span>Generating Form with AI...</span>
               </>
             ) : (
@@ -92,7 +92,6 @@ export default function CreateFormPage() {
         </form>
       </div>
 
-      {/* Reusable Success Modal Component */}
       {generatedFormId && (
         <FormSuccessModal
           formId={generatedFormId}

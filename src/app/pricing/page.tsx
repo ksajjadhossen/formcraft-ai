@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import PricingCard from "@/components/pricing/PricingCard";
 import PricingFAQ from "@/components/pricing/PricingFAQ";
 import TrustBadge from "@/components/pricing/TrustBadge";
+import Loader from "@/components/ui/Loader";
 
 const PRICING_PLANS = [
   {
@@ -61,10 +63,9 @@ const PRICING_PLANS = [
   },
 ];
 
-export default function PricingPage() {
+function PricingContent() {
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24 flex flex-col items-center justify-center">
-      {/* Header Section */}
       <div className="text-center max-w-2xl space-y-3 mb-16">
         <span className="px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full text-purple-600 dark:text-purple-400 text-xs font-semibold uppercase tracking-wider">
           Flexible Pricing
@@ -78,22 +79,27 @@ export default function PricingPage() {
         </p>
       </div>
 
-      {/* Pricing Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
         {PRICING_PLANS.map((plan, index) => (
           <PricingCard key={index} {...plan} />
         ))}
       </div>
 
-      {/* Trust Badges with proper top margin */}
       <div className="w-full mt-24">
         <TrustBadge />
       </div>
 
-      {/* FAQ Section with proper top margin */}
       <div className="w-full mt-24">
         <PricingFAQ />
       </div>
     </div>
+  );
+}
+
+export default function PricingPage() {
+  return (
+    <Suspense fallback={<Loader text="Loading Pricing Plans..." />}>
+      <PricingContent />
+    </Suspense>
   );
 }
