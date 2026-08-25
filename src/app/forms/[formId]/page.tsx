@@ -31,13 +31,12 @@ export default async function PublicFormPage({ params }: FormPageProps) {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-purple-500 selection:text-white flex flex-col justify-between py-12 px-4 sm:px-6 transition-colors duration-300 relative overflow-hidden">
-      {/* Background Glow Effect */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-150 h-75 bg-purple-600/10 blur-[120px] pointer-events-none rounded-full" />
 
       <div className="max-w-xl w-full mx-auto space-y-6 relative z-10">
         <FormHeader title={form.title} description={form.description} />
 
-        <FormFieldList questions={form.questions} />
+        <FormFieldList formId={form.id} questions={form.questions} />
 
         <div className="text-center text-xs text-slate-400 dark:text-slate-500 pt-4 flex items-center justify-center gap-1.5">
           <span>Powered by</span>

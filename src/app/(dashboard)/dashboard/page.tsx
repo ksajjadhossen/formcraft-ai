@@ -38,6 +38,12 @@ export default async function DashboardPage() {
     0,
   );
 
+  // ডাইনামিক কমপ্লিশন রেট হিসাব (যদি ফর্ম থাকে তবে তার ওপর ভিত্তি করে)
+  const completionRate =
+    totalForms > 0
+      ? Math.min(Math.round((totalResponses / (totalForms * 5)) * 100), 100)
+      : 0;
+
   return (
     <div className="min-h-screen bg-(--bg-main) text-(--text-main) flex transition-colors duration-300">
       {/* Left Sidebar */}
@@ -66,7 +72,7 @@ export default async function DashboardPage() {
           />
           <StatsCard
             title="Completion Rate"
-            value="0%"
+            value={`${completionRate}%`}
             subtitle="Average submission rate"
             icon={<TrendingUp className="w-4 h-4 text-emerald-500" />}
             badge="Optimal"

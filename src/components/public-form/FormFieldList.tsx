@@ -4,15 +4,49 @@ import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 
 interface FormFieldListProps {
+  formId?: string;
   questions: any[];
 }
 
-export default function FormFieldList({ questions }: FormFieldListProps) {
+export default function FormFieldList({
+  formId,
+  questions,
+}: FormFieldListProps) {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+    const answers: Record<string, any> = {};
+
+    questions.forEach((q: any) => {
+      const value = formData.get(q.id);
+      if (value !== null) {
+        answers[q.id] = value;
+      }
+    });
+
+    try {
+      const res = await fetch("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ formId, answers }),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        const errData = await res.json();
+        console.error("Submission failed:", errData);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
@@ -71,7 +105,7 @@ export default function FormFieldList({ questions }: FormFieldListProps) {
                         >
                           <input
                             type="radio"
-                            name={`question-${index}`}
+                            name={q.id}
                             value={option}
                             required={q.required}
                             className="text-purple-600 focus:ring-purple-500"
@@ -82,6 +116,7 @@ export default function FormFieldList({ questions }: FormFieldListProps) {
                     ) : (
                       <input
                         type="text"
+                        name={q.id}
                         placeholder="No options available"
                         required={q.required}
                         className="w-full px-4 py-3 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-slate-100"
@@ -91,6 +126,7 @@ export default function FormFieldList({ questions }: FormFieldListProps) {
                 ) : (
                   <input
                     type={q.type ? q.type.toLowerCase() : "text"}
+                    name={q.id}
                     placeholder={q.placeholder || "Type your answer here..."}
                     required={q.required}
                     className="w-full px-4 py-3 text-sm bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/20 transition-all"
@@ -107,9 +143,10 @@ export default function FormFieldList({ questions }: FormFieldListProps) {
 
         <button
           type="submit"
-          className="w-full mt-4 py-3.5 px-6 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-all shadow-lg shadow-purple-600/25 active:scale-[0.99] text-sm"
+          disabled={loading}
+          className="w-full mt-4 py-3.5 px-6 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-all shadow-lg shadow-purple-600/25 active:scale-[0.99] text-sm disabled:opacity-50"
         >
-          Submit Response
+          {loading ? "Submitting..." : "Submit Response"}
         </button>
       </form>
     </div>
