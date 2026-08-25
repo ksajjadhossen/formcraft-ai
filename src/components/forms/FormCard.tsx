@@ -1,5 +1,8 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import { Trash2, ArrowUpRight, BarChart3 } from "lucide-react";
+import { Trash2, ArrowUpRight, BarChart3, Loader2 } from "lucide-react";
 
 interface FormCardProps {
   form: {
@@ -9,15 +12,28 @@ interface FormCardProps {
     createdAt: Date | string;
     questions?: any[];
   };
-  onDelete?: (id: string) => void;
+  onDelete?: (id: string) => Promise<void> | void;
 }
 
 export default function FormCard({ form, onDelete }: FormCardProps) {
+  const [isDeleting, setIsDeleting] = useState(false);
   const questionCount = form.questions ? form.questions.length : 0;
   const formattedDate = new Date(form.createdAt).toLocaleDateString();
 
+  const handleDeleteClick = async () => {
+    if (!onDelete) return;
+    try {
+      setIsDeleting(true);
+      await onDelete(form.id);
+    } catch (error) {
+      console.error("Failed to delete form:", error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return (
-    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xl transition-all hover:border-purple-500/50 flex flex-col justify-between space-y-4">
+    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xl transition-all hover:border-purple-500/50 flex flex-col justify-between space-y-4 relative">
       {/* Top Section: Title & Description */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
@@ -53,11 +69,16 @@ export default function FormCard({ form, onDelete }: FormCardProps) {
         <div className="flex items-center gap-2">
           {onDelete && (
             <button
-              onClick={() => onDelete(form.id)}
-              className="p-2 bg-slate-100 dark:bg-slate-800 hover:bg-red-100 dark:hover:bg-red-600/20 text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 rounded-xl transition-colors"
+              onClick={handleDeleteClick}
+              disabled={isDeleting}
+              className="p-2 bg-slate-100 dark:bg-slate-800 hover:bg-red-100 dark:hover:bg-red-600/20 text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 rounded-xl transition-colors disabled:opacity-50"
               title="Delete Form"
             >
-              <Trash2 className="w-4 h-4" />
+              {isDeleting ? (
+                <Loader2 className="w-4 h-4 animate-spin text-red-500" />
+              ) : (
+                <Trash2 className="w-4 h-4" />
+              )}
             </button>
           )}
 

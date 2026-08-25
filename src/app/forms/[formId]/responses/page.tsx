@@ -1,8 +1,10 @@
+import { Suspense } from "react";
 import { prisma } from "@/lib/db/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Inbox, Calendar, UserCheck } from "lucide-react";
 import ExportDropdown from "@/components/forms/ExportDropdown";
+import Loader from "@/components/ui/Loader";
 
 interface ResponsesPageProps {
   params: Promise<{
@@ -10,16 +12,7 @@ interface ResponsesPageProps {
   }>;
 }
 
-export default async function FormResponsesPage({
-  params,
-}: ResponsesPageProps) {
-  const resolvedParams = await params;
-  const formId = resolvedParams.formId;
-
-  if (!formId) {
-    notFound();
-  }
-
+async function FormResponsesContent({ formId }: { formId: string }) {
   const form = await prisma.form.findUnique({
     where: { id: formId },
     include: {
@@ -39,7 +32,6 @@ export default async function FormResponsesPage({
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 py-10 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
       <div className="max-w-5xl mx-auto space-y-8">
-        {/* Top Navigation & Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
           <div className="space-y-1">
             <Link
@@ -58,7 +50,6 @@ export default async function FormResponsesPage({
             </p>
           </div>
 
-          {/* Right Side: Total Submissions & Export Dropdown */}
           <div className="flex items-center gap-3">
             <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-3 rounded-xl flex items-center gap-3 shadow-sm">
               <div className="w-10 h-10 bg-purple-100 dark:bg-purple-600/10 text-purple-600 dark:text-purple-400 rounded-lg flex items-center justify-center">
@@ -74,7 +65,6 @@ export default async function FormResponsesPage({
               </div>
             </div>
 
-            {/* Export Dropdown Button Component */}
             <ExportDropdown
               formTitle={form.title}
               responses={form.responses}
@@ -83,7 +73,6 @@ export default async function FormResponsesPage({
           </div>
         </div>
 
-        {/* Responses List Section */}
         {form.responses.length === 0 ? (
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-12 text-center space-y-4 shadow-sm">
             <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 text-slate-400 rounded-full flex items-center justify-center mx-auto">
@@ -143,5 +132,22 @@ export default async function FormResponsesPage({
         )}
       </div>
     </div>
+  );
+}
+
+export default async function FormResponsesPage({
+  params,
+}: ResponsesPageProps) {
+  const resolvedParams = await params;
+  const formId = resolvedParams.formId;
+
+  if (!formId) {
+    notFound();
+  }
+
+  return (
+    <Suspense fallback={<Loader text="Loading Form Responses..." />}>
+      <FormResponsesContent formId={formId} />
+    </Suspense>
   );
 }
