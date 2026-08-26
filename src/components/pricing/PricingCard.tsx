@@ -1,6 +1,7 @@
 "use client";
 
-import { Check } from "lucide-react";
+import { useState } from "react";
+import { Check, Loader2 } from "lucide-react";
 
 interface PricingCardProps {
   title: string;
@@ -12,6 +13,7 @@ interface PricingCardProps {
   badgeText: string;
   buttonStyle: string;
   isPopular?: boolean;
+  priceId?: string; // Stripe Price ID
 }
 
 export default function PricingCard({
@@ -24,7 +26,39 @@ export default function PricingCard({
   badgeText,
   buttonStyle,
   isPopular,
+  priceId,
 }: PricingCardProps) {
+  const [loading, setLoading] = useState(false);
+
+  const handleStripeCheckout = async () => {
+    if (!priceId) {
+      window.location.href = "/dashboard";
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const res = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ priceId, productName: title }),
+      });
+
+      const data = await res.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert(data.error || "Something went wrong");
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("An error occurred during checkout");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div
       className={`relative p-6 sm:p-8 rounded-2xl bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl border ${borderColor} shadow-xl flex flex-col justify-between transition-all duration-300 hover:scale-[1.02]`}
@@ -47,7 +81,7 @@ export default function PricingCard({
           </span>
         </div>
 
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 min-h-[32px]">
+        <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 min-h-8">
           {description}
         </p>
 
@@ -77,9 +111,18 @@ export default function PricingCard({
 
       <div className="mt-8">
         <button
-          className={`w-full py-2.5 px-4 rounded-xl font-medium text-xs shadow-md transition-all active:scale-[0.98] ${buttonStyle}`}
+          onClick={handleStripeCheckout}
+          disabled={loading}
+          className={`w-full py-2.5 px-4 rounded-xl font-medium text-xs shadow-md transition-all active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed ${buttonStyle}`}
         >
-          Get Started
+          {loading ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              <span>Processing...</span>
+            </>
+          ) : (
+            <span>Get Started</span>
+          )}
         </button>
       </div>
     </div>

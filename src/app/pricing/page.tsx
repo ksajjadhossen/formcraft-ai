@@ -25,6 +25,7 @@ const PRICING_PLANS = [
   {
     title: "Pro Creator",
     price: "$19",
+    priceId: "price_1U8fLGAjhqU0SLBvjH2i28QP",
     description:
       "Designed for professionals and growing teams needing more power.",
     features: [
@@ -45,6 +46,7 @@ const PRICING_PLANS = [
   {
     title: "Enterprise",
     price: "$49",
+    priceId: "price_1U8fM6AjhqU0SLBvXBeYCteO",
     description:
       "Advanced features and security for large scale organizations.",
     features: [
