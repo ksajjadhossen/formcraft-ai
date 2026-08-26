@@ -29,24 +29,24 @@ export default function FormSuccessModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4 animate-in fade-in duration-200">
-      <div className="w-full max-w-md p-6 bg-slate-900/90 border border-purple-500/30 rounded-xl shadow-2xl backdrop-blur-2xl text-white relative space-y-5">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 dark:bg-slate-950/70 backdrop-blur-md p-4 animate-in fade-in duration-200">
+      <div className="w-full max-w-md p-6 bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-purple-500/30 rounded-xl shadow-2xl backdrop-blur-2xl text-slate-900 dark:text-white relative space-y-5 transition-colors">
         {/* Close / Dismiss */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 dark:hover:text-white transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
 
         <div className="space-y-1">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-purple-500/20 border border-purple-400/30 rounded-md text-purple-300 text-xs font-semibold">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-purple-100 dark:bg-purple-500/20 border border-purple-200 dark:border-purple-400/30 rounded-md text-purple-700 dark:text-purple-300 text-xs font-semibold">
             ✨ Success! Form Created
           </div>
-          <h3 className="text-xl font-bold tracking-tight text-white mt-2">
+          <h3 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white mt-2">
             Your AI Form is Ready
           </h3>
-          <p className="text-xs text-slate-300">
+          <p className="text-xs text-slate-600 dark:text-slate-300">
             Share this link with others to collect responses, or jump right into
             your dashboard.
           </p>
@@ -54,15 +54,15 @@ export default function FormSuccessModal({
 
         {/* Link Box with Copy Button */}
         <div className="space-y-2">
-          <label className="text-[11px] font-medium text-slate-400 uppercase tracking-wider">
+          <label className="text-[11px] font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">
             Public Form Link
           </label>
-          <div className="flex items-center gap-2 p-2 bg-slate-950/80 border border-slate-800 rounded-lg">
+          <div className="flex items-center gap-2 p-2 bg-slate-100 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-lg">
             <input
               type="text"
               readOnly
               value={formUrl}
-              className="w-full bg-transparent text-xs text-purple-300 focus:outline-none px-1 truncate"
+              className="w-full bg-transparent text-xs text-purple-600 dark:text-purple-300 focus:outline-none px-1 truncate"
             />
             <button
               onClick={handleCopy}
@@ -87,7 +87,7 @@ export default function FormSuccessModal({
             href={`/forms/${formId}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-1.5 py-2.5 px-4 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg transition-all border border-slate-700 text-center"
+            className="flex items-center justify-center gap-1.5 py-2.5 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-lg transition-all border border-slate-300 dark:border-slate-700 text-center"
           >
             <span>Preview</span>
             <ExternalLink className="w-3.5 h-3.5" />
