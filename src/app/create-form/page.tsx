@@ -6,6 +6,7 @@ import { ArrowRight, Wand2 } from "lucide-react";
 import CreateFormHeader from "@/components/create-form/CreateFormHeader";
 import PromptSuggestions from "@/components/create-form/PromptSuggestions";
 import FormSuccessModal from "@/components/create-form/FormSuccessModal";
+import UpgradeModal from "@/components/UpgradeModal";
 
 const SUGGESTED_PROMPTS = [
   "Coffee shop feedback form with ratings & review",
@@ -17,6 +18,7 @@ export default function CreateFormPage() {
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   const [generatedFormId, setGeneratedFormId] = useState<string | null>(null);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const router = useRouter();
 
   const handleGenerate = async (e: React.FormEvent) => {
@@ -34,6 +36,11 @@ export default function CreateFormPage() {
       const responseText = await res.text();
       const data = responseText ? JSON.parse(responseText) : {};
 
+      if (res.status === 403) {
+        setShowUpgradeModal(true);
+        return;
+      }
+
       if (res.ok && data.formId) {
         setGeneratedFormId(data.formId);
       } else {
@@ -48,7 +55,7 @@ export default function CreateFormPage() {
   };
 
   return (
-    <div className="flex-1 w-full max-w-3xl py-12 mx-auto px-4 flex flex-col items-center justify-center mb-12 relative">
+    <div className="flex-1 w-full max-w-3xl py-12 mx-auto px-4 flex flex-col items-center justify-center mb-12 relative text-slate-900 dark:text-slate-100">
       <CreateFormHeader />
 
       <div className="w-full p-6 md:p-8 bg-white/80 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800/80 rounded-xl shadow-2xl backdrop-blur-xl transition-all duration-300 mt-6">
@@ -79,7 +86,7 @@ export default function CreateFormPage() {
           >
             {loading ? (
               <>
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <Wand2 className="w-4 h-4 animate-spin text-purple-200" />
                 <span>Generating Form with AI...</span>
               </>
             ) : (
@@ -102,6 +109,11 @@ export default function CreateFormPage() {
           onGoToDashboard={() => router.push("/dashboard")}
         />
       )}
+
+      <UpgradeModal
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+      />
     </div>
   );
 }

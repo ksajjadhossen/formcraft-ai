@@ -13,7 +13,7 @@ interface PricingCardProps {
   badgeText: string;
   buttonStyle: string;
   isPopular?: boolean;
-  priceId?: string; // Stripe Price ID
+  priceId?: string;
 }
 
 export default function PricingCard({
@@ -32,6 +32,7 @@ export default function PricingCard({
 
   const handleStripeCheckout = async () => {
     if (!priceId) {
+      // eslint-disable-next-line @next/next/no-location-assign-relative-destination
       window.location.href = "/dashboard";
       return;
     }

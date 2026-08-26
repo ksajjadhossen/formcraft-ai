@@ -43,6 +43,26 @@ export async function POST(req: Request) {
       });
     }
 
+    // ==========================================
+    // ADDED LOGIC: Free Limit Check (5 Forms)
+    // ==========================================
+    const formCount = await prisma.form.count({
+      where: { userId: user.id },
+    });
+
+    const isPro = false;
+
+    if (!isPro && formCount >= 5) {
+      return NextResponse.json(
+        {
+          error: "Free limit reached (Maximum 5 forms). Please upgrade to Pro!",
+          redirectUrl: "/pricing",
+        },
+        { status: 403 },
+      );
+    }
+    // ==========================================
+
     const body = await req.json();
     const { prompt } = requestSchema.parse(body);
 
