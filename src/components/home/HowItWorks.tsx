@@ -31,7 +31,7 @@ export default function HowItWorks() {
   return (
     <section className="py-24 px-4 max-w-7xl mx-auto border-t border-slate-200/80 dark:border-slate-800/80 relative overflow-hidden">
       {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-purple-500/5 dark:bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-100 h-100 bg-purple-500/5 dark:bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Section Header */}
       <div className="relative z-10 text-center max-w-2xl mx-auto mb-16 space-y-3">
@@ -44,7 +44,7 @@ export default function HowItWorks() {
         </div>
         <h3 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
           How it works in{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-500 dark:from-purple-400 dark:to-blue-400">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-blue-500 dark:from-purple-400 dark:to-blue-400">
             3 easy steps
           </span>
         </h3>
@@ -60,7 +60,7 @@ export default function HowItWorks() {
           return (
             <div
               key={idx}
-              className="group relative bg-gradient-to-br from-purple-500/10 via-slate-900/40 to-blue-500/10 p-[1px] rounded-2xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20"
+              className="group relative bg-linear-to-br from-purple-500/10 via-slate-900/40 to-blue-500/10 p-px rounded-2xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20"
               style={{
                 clipPath:
                   "polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%)",
@@ -79,7 +79,7 @@ export default function HowItWorks() {
                   <div className="p-3 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <span className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-500 dark:from-purple-400 dark:to-blue-400">
+                  <span className="text-3xl font-black text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-blue-500 dark:from-purple-400 dark:to-blue-400">
                     {step.num}
                   </span>
                 </div>
