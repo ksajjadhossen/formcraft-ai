@@ -62,8 +62,8 @@ export default function EngineeringPillarsSection() {
   return (
     <section className="relative py-24 px-4 max-w-7xl mx-auto overflow-hidden">
       {/* Background Glows */}
-      <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-purple-500/10 dark:bg-purple-600/20 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[400px] h-[400px] bg-blue-500/10 dark:bg-blue-600/20 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-100 h-100 bg-purple-500/10 dark:bg-purple-600/20 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-100 h-100 bg-blue-500/10 dark:bg-blue-600/20 rounded-full blur-[130px] pointer-events-none" />
 
       {/* Section Header */}
       <div className="relative z-10 text-center max-w-3xl mx-auto mb-12 space-y-3">
@@ -73,7 +73,7 @@ export default function EngineeringPillarsSection() {
         </div>
         <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
           Intelligence is{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-500 dark:from-purple-400 dark:to-blue-400">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-blue-500 dark:from-purple-400 dark:to-blue-400">
             not just a feature
           </span>
         </h2>
@@ -141,7 +141,7 @@ export default function EngineeringPillarsSection() {
           <div className="absolute top-0 right-0 w-40 h-40 bg-purple-500/15 rounded-bl-full blur-3xl pointer-events-none" />
 
           {/* Framer Motion AnimatePresence for Smooth Left/Right Slide Transition */}
-          <div className="relative min-h-[220px]">
+          <div className="relative min-h-55">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
                 key={current.id}
