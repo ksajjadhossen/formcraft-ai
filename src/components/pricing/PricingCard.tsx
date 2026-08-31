@@ -60,10 +60,10 @@ export default function PricingCard({
 
   return (
     <div
-      className={`relative p-8 rounded-3xl flex flex-col justify-between transition-all duration-300 ${
+      className={`relative p-8 rounded-3xl flex flex-col justify-between h-full transition-all duration-300 backdrop-blur-xl ${
         isPopular
-          ? "bg-white dark:bg-[#14101f] text-slate-900 dark:text-white border-2 border-purple-600 dark:border-purple-500 shadow-2xl shadow-purple-600/15 dark:shadow-purple-500/25 lg:-translate-y-4 z-10"
-          : "bg-white dark:bg-[#0c0a14] text-slate-900 dark:text-white border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 shadow-sm"
+          ? "bg-white/90 dark:bg-purple-950/20 text-slate-900 dark:text-white border-2 border-purple-600 dark:border-purple-500 shadow-2xl shadow-purple-600/20 lg:-translate-y-4 z-10"
+          : "bg-white/70 dark:bg-white/3 text-slate-900 dark:text-white border border-slate-200/80 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 shadow-lg shadow-slate-200/5 dark:shadow-none"
       }`}
     >
       {/* Most Popular Badge */}
@@ -95,7 +95,7 @@ export default function PricingCard({
         </div>
 
         {/* Core Features List */}
-        <div className="space-y-4 pt-6 border-t border-slate-100 dark:border-white/10">
+        <div className="space-y-4 pt-6 border-t border-slate-200/60 dark:border-white/10">
           <p className="text-[10px] uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500">
             Core Features
           </p>
@@ -111,7 +111,7 @@ export default function PricingCard({
 
         {/* Extra Added Features Section */}
         {extraFeatures.length > 0 && (
-          <div className="space-y-3 pt-5 mt-5 border-t border-dashed border-slate-200 dark:border-white/10">
+          <div className="space-y-3 pt-5 mt-5 border-t border-dashed border-slate-200/60 dark:border-white/10">
             <p className="text-[10px] uppercase font-bold tracking-wider text-purple-600 dark:text-purple-400 flex items-center gap-1">
               <span>✨</span> Advanced Perks
             </p>
@@ -128,7 +128,7 @@ export default function PricingCard({
       </div>
 
       {/* Button & Subtext */}
-      <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/10 space-y-3">
+      <div className="mt-8 pt-6 border-t border-slate-200/60 dark:border-white/10 space-y-3">
         <button
           onClick={handleStripeCheckout}
           disabled={loading}

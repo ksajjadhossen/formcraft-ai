@@ -7,6 +7,7 @@ import FeatureFlow from "@/components/home/FeatureFlow";
 import EngineeringPillarsSection from "@/components/home/EngineeringPillarsSection";
 import FormAnalyticsPreviewSection from "@/components/home/FormAnalyticsPreviewSection";
 import EvolutionSection from "@/components/home/EvolutionSection";
+import PricingSection from "@/components/pricing/PricingSection";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         <FormAnalyticsPreviewSection />
         <HowItWorks />
         <EvolutionSection />
+        <PricingSection />
         <FAQSection />
         <CTASection />
       </div>
