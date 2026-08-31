@@ -32,60 +32,65 @@ export default function Navbar() {
           transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
           transitionDuration: "400ms",
         }}
-        className={`flex items-center justify-between ${
+        className={`transition-all duration-300 ${
           isScrolled
-            ? "mt-3 w-[92%] md:w-[85%] max-w-7xl bg-white/85 dark:bg-slate-950/85 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 rounded-full px-6 md:px-8 py-3 shadow-xl"
-            : "w-full bg-white/70 dark:bg-slate-950/70 backdrop-blur-md border-b border-slate-200/40 dark:border-slate-800/40 px-6 md:px-12 py-4 rounded-none"
+            ? "mt-3 w-[92%] md:w-[85%] max-w-7xl bg-white/85 dark:bg-slate-950/85 backdrop-blur-md border border-slate-200/80 dark:border-slate-800/80 rounded-full px-6 md:px-8 py-2.5 shadow-xl flex items-center justify-between"
+            : "w-full bg-white/70 dark:bg-slate-950/70 backdrop-blur-md border-b border-slate-200/40 dark:border-slate-800/40 py-4 rounded-none"
         }`}
       >
-        <Link
-          href="/"
-          className="text-lg font-bold text-purple-600 dark:text-purple-400 tracking-tight hover:opacity-90 transition-opacity"
+        {/* যখন স্ক্রল করা থাকবে না, তখন ভেতরের এই ডিভটি আইটেমগুলোকে ছড়াতে দেবে না, বরং max-w-7xl এর মধ্যে চেপে রাখবে */}
+        <div
+          className={`${!isScrolled ? "max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between w-full" : "flex items-center justify-between w-full"}`}
         >
-          FormCraft AI
-        </Link>
+          <Link
+            href="/"
+            className="text-lg font-bold text-purple-600 dark:text-purple-400 tracking-tight hover:opacity-90 transition-opacity"
+          >
+            FormCraft AI
+          </Link>
 
-        <div className="flex items-center gap-6">
-          {isLoaded && isSignedIn && (
-            <>
-              <Link
-                href="/dashboard"
-                className={`text-xs font-medium transition-colors ${
-                  pathname === "/dashboard"
-                    ? "text-purple-600 dark:text-purple-400 font-semibold"
-                    : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
-                }`}
-              >
-                Dashboard
-              </Link>
-              <Link
-                href="/create-form"
-                className={`text-xs font-medium transition-colors ${
-                  pathname === "/create-form"
-                    ? "text-purple-600 dark:text-purple-400 font-semibold"
-                    : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
-                }`}
-              >
-                + Create
-              </Link>
-            </>
-          )}
+          <div className="flex items-center gap-5">
+            {isLoaded && isSignedIn && (
+              <>
+                <Link
+                  href="/dashboard"
+                  className={`text-xs font-medium transition-colors ${
+                    pathname === "/dashboard"
+                      ? "text-purple-600 dark:text-purple-400 font-semibold"
+                      : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+                  }`}
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  href="/create-form"
+                  className={`text-xs font-medium transition-colors ${
+                    pathname === "/create-form"
+                      ? "text-purple-600 dark:text-purple-400 font-semibold"
+                      : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+                  }`}
+                >
+                  + Create
+                </Link>
+              </>
+            )}
 
-          <AnimatedThemeToggler />
+            <AnimatedThemeToggler />
 
-          {isLoaded && (
-            <>
-              {isSignedIn ? (
-                <UserButton />
-              ) : (
-                <SignInButton mode="modal">
-                  <button className="text-xs bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md transition-all font-medium shadow-sm">
-                    Sign In
-                  </button>
-                </SignInButton>
-              )}
-            </>
-          )}
+            {isLoaded && (
+              <>
+                {isSignedIn ? (
+                  <UserButton />
+                ) : (
+                  <SignInButton mode="modal">
+                    <button className="text-xs bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md transition-all font-medium shadow-sm">
+                      Sign In
+                    </button>
+                  </SignInButton>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </nav>
     </header>
