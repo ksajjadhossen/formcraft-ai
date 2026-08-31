@@ -8,6 +8,7 @@ import EngineeringPillarsSection from "@/components/home/EngineeringPillarsSecti
 import FormAnalyticsPreviewSection from "@/components/home/FormAnalyticsPreviewSection";
 import EvolutionSection from "@/components/home/EvolutionSection";
 import PricingSection from "@/components/pricing/PricingSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
         <HowItWorks />
         <EvolutionSection />
         <PricingSection />
+        <TestimonialsSection></TestimonialsSection>
         <FAQSection />
         <CTASection />
       </div>
