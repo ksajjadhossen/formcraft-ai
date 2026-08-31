@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Zap, BarChart3, ShieldCheck, Database, Cpu } from "lucide-react";
 
 const pillars = [
@@ -50,13 +51,19 @@ const pillars = [
 
 export default function EngineeringPillarsSection() {
   const [activeTab, setActiveTab] = useState(0);
+  const [direction, setDirection] = useState(1);
   const current = pillars[activeTab];
+
+  const handleTabChange = (index: number) => {
+    setDirection(index > activeTab ? 1 : -1);
+    setActiveTab(index);
+  };
 
   return (
     <section className="relative py-24 px-4 max-w-7xl mx-auto overflow-hidden">
-      {/* Background Glows for Light & Dark Modes */}
-      <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-100 h-100 bg-purple-500/10 dark:bg-purple-600/20 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-100 h-100 bg-blue-500/10 dark:bg-blue-600/20 rounded-full blur-[130px] pointer-events-none" />
+      {/* Background Glows */}
+      <div className="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-purple-500/10 dark:bg-purple-600/20 rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[400px] h-[400px] bg-blue-500/10 dark:bg-blue-600/20 rounded-full blur-[130px] pointer-events-none" />
 
       {/* Section Header */}
       <div className="relative z-10 text-center max-w-3xl mx-auto mb-12 space-y-3">
@@ -66,7 +73,7 @@ export default function EngineeringPillarsSection() {
         </div>
         <h2 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
           Intelligence is{" "}
-          <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-blue-500 dark:from-purple-400 dark:to-blue-400">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-500 dark:from-purple-400 dark:to-blue-400">
             not just a feature
           </span>
         </h2>
@@ -75,15 +82,15 @@ export default function EngineeringPillarsSection() {
           automated production ecosystem.
         </p>
 
-        {/* Interactive Filter Pills (Inspired by your reference image) */}
+        {/* Interactive Filter Pills */}
         <div className="flex flex-wrap justify-center gap-2.5 pt-6">
           {pillars.map((pillar, idx) => (
             <button
               key={pillar.id}
-              onClick={() => setActiveTab(idx)}
+              onClick={() => handleTabChange(idx)}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 border ${
                 activeTab === idx
-                  ? "bg-purple-600 text-white border-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.4)] scale-105"
+                  ? "bg-purple-600 text-white border-purple-500 shadow-[0_0_25px_rgba(168,85,247,0.5)] scale-105"
                   : "bg-white/60 dark:bg-slate-900/40 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-purple-500/50"
               }`}
             >
@@ -94,9 +101,9 @@ export default function EngineeringPillarsSection() {
         </div>
       </div>
 
-      {/* Interactive Bento Grid Display */}
+      {/* Bento Grid Display */}
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Side: Summary / The "Old Way vs FormCraft" Concept */}
+        {/* Left Side: Summary Card */}
         <div className="p-8 bg-white/70 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-800 backdrop-blur-xl flex flex-col justify-between space-y-6 shadow-xl dark:shadow-none">
           <div className="space-y-3">
             <span className="text-[10px] uppercase font-bold tracking-widest text-slate-500 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md">
@@ -129,28 +136,40 @@ export default function EngineeringPillarsSection() {
           </div>
         </div>
 
-        {/* Center & Right: Active Pillar Main Showcase */}
-        <div className="lg:col-span-2 relative p-8 md:p-10 bg-white/80 dark:bg-slate-900/70 rounded-2xl border border-purple-500/40 dark:border-purple-500/50 backdrop-blur-2xl shadow-[0_0_30px_rgba(168,85,247,0.15)] dark:shadow-[0_0_35px_rgba(168,85,247,0.25)] flex flex-col justify-between space-y-6 overflow-hidden transition-all duration-500">
-          {/* Glowing Accents */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-bl-full blur-2xl pointer-events-none" />
+        {/* Center & Right: Active Pillar Showcase with Framer Motion Slide Effect */}
+        <div className="lg:col-span-2 relative p-8 md:p-10 bg-white/80 dark:bg-slate-900/70 rounded-2xl border border-purple-500/40 dark:border-purple-500/50 backdrop-blur-2xl shadow-[0_0_35px_rgba(168,85,247,0.15)] dark:shadow-[0_0_40px_rgba(168,85,247,0.25)] flex flex-col justify-between space-y-6 overflow-hidden">
+          <div className="absolute top-0 right-0 w-40 h-40 bg-purple-500/15 rounded-bl-full blur-3xl pointer-events-none" />
 
-          <div className="space-y-4 relative z-10">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-purple-600 dark:text-purple-400 tracking-wider">
-                {current.badge}
-              </span>
-              <div className="p-2.5 bg-slate-100 dark:bg-slate-800/80 rounded-xl border border-slate-200 dark:border-slate-700">
-                {current.icon}
-              </div>
-            </div>
+          {/* Framer Motion AnimatePresence for Smooth Left/Right Slide Transition */}
+          <div className="relative min-h-[220px]">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={current.id}
+                custom={direction}
+                initial={{ opacity: 0, x: direction * 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: direction * -50 }}
+                transition={{ duration: 0.35, ease: "easeInOut" }}
+                className="space-y-4 relative z-10"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-purple-600 dark:text-purple-400 tracking-wider">
+                    {current.badge}
+                  </span>
+                  <div className="p-2.5 bg-slate-100 dark:bg-slate-800/80 rounded-xl border border-slate-200 dark:border-slate-700 shadow-inner">
+                    {current.icon}
+                  </div>
+                </div>
 
-            <h3 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white">
-              {current.title}
-            </h3>
+                <h3 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white">
+                  {current.title}
+                </h3>
 
-            <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed">
-              {current.description}
-            </p>
+                <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+                  {current.description}
+                </p>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
           <div className="relative z-10 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
