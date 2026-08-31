@@ -36,7 +36,7 @@ export default function FAQSection() {
   return (
     <section className="relative w-full py-24 md:py-32 px-4 max-w-4xl mx-auto border-t border-slate-200/60 dark:border-white/10">
       {/* Background Glow Effect */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[200px] bg-purple-600/10 dark:bg-purple-600/15 blur-[130px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-100 h-50 bg-purple-600/10 dark:bg-purple-600/15 blur-[130px] rounded-full pointer-events-none -z-10" />
 
       {/* Header */}
       <div className="text-center mb-16 space-y-4">
@@ -45,7 +45,7 @@ export default function FAQSection() {
         </span>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
           Frequently Asked{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 dark:from-purple-400 dark:via-purple-300 dark:to-indigo-400">
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 via-purple-500 to-indigo-600 dark:from-purple-400 dark:via-purple-300 dark:to-indigo-400">
             Questions
           </span>
         </h2>
@@ -62,7 +62,7 @@ export default function FAQSection() {
             className={`rounded-2xl transition-all duration-300 backdrop-blur-xl border ${
               openIdx === idx
                 ? "bg-white/90 dark:bg-slate-900/60 border-purple-500/50 shadow-lg shadow-purple-500/5"
-                : "bg-white/70 dark:bg-white/[0.03] border-slate-200/80 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20"
+                : "bg-white/70 dark:bg-white/3 border-slate-200/80 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20"
             } overflow-hidden`}
           >
             <button
