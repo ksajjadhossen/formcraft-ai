@@ -1,107 +1,143 @@
-import { Suspense } from "react";
+"use client";
+
+import { useState } from "react";
 import PricingCard from "@/components/pricing/PricingCard";
-import PricingFAQ from "@/components/pricing/PricingFAQ";
-import TrustBadge from "@/components/pricing/TrustBadge";
-import Loader from "@/components/ui/Loader";
 
 const PRICING_PLANS = [
   {
     title: "Starter",
     price: "$0",
-    description: "Perfect for hobbyists and trying out AI form generation.",
+    billingPeriod: "/ year",
+    description: "Find your baseline. Start free.",
     features: [
-      "Up to 5 AI Forms per month",
-      "Basic Form Analytics",
-      "Standard Templates",
-      "Community Support",
+      "Career Readiness Twin Diagnostics",
+      "Standard Career Roadmap Generator",
+      "Basic Skill-Gap Analysis",
+      "Community Forum Support",
     ],
-    borderColor: "border-slate-200 dark:border-slate-800",
-    badgeBg: "bg-slate-100 dark:bg-slate-800",
-    badgeText: "text-slate-700 dark:text-slate-300",
-    buttonStyle:
-      "bg-slate-900 hover:bg-slate-800 text-white dark:bg-slate-100 dark:hover:bg-white dark:text-slate-950",
+    extraFeatures: [
+      "Access to basic public templates",
+      "Weekly newsletter insights",
+    ],
     isPopular: false,
+    buttonText: "Get Started",
   },
   {
-    title: "Pro Creator",
-    price: "$19",
+    title: "Pro Career OS",
+    price: "$199",
     priceId: "price_1U8fLGAjhqU0SLBvjH2i28QP",
-    description:
-      "Designed for professionals and growing teams needing more power.",
+    billingPeriod: "/ year",
+    description: "Everything you need to become job-ready.",
     features: [
-      "Unlimited AI Forms",
-      "Advanced Real-time Analytics",
-      "Priority Gemini AI Generation",
-      "Custom Branding & Logo",
-      "24/7 Priority Support",
+      "Unlimited Skill Proof Graphing",
+      "Automated Learning Debt Resolution",
+      "Job Reality Check & ID Scanning",
+      "AI Copilot Memory & Guidance",
+      "Zero-Guilt Adaptive Recovery",
     ],
-    borderColor:
-      "border-purple-500/50 dark:border-purple-500/60 ring-2 ring-purple-500/20",
-    badgeBg: "bg-purple-100 dark:bg-purple-950/60",
-    badgeText: "text-purple-600 dark:text-purple-300",
-    buttonStyle:
-      "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-purple-600/25",
+    extraFeatures: [
+      "Priority Gemini AI Generation",
+      "1-on-1 AI Mock Interview Sessions",
+      "Exclusive Pro Badge on Profile",
+    ],
     isPopular: true,
+    buttonText: "Get Started",
   },
   {
     title: "Enterprise",
-    price: "$49",
+    price: "$699",
     priceId: "price_1U8fM6AjhqU0SLBvXBeYCteO",
-    description:
-      "Advanced features and security for large scale organizations.",
+    billingPeriod: "/ year",
+    description: "For bootcamps and university cohorts.",
     features: [
-      "Everything in Pro Creator",
-      "Custom Webhooks & API Access",
-      "Team Collaboration Tools",
+      "Unlimited Organization Members",
+      "All Pro Features Included",
+      "Recruiter Candidate Verification Portal",
+      "Custom Career Roadmap Templates",
       "Dedicated Account Manager",
-      "Custom Security Compliance",
     ],
-    borderColor: "border-emerald-500/50 dark:border-emerald-500/60",
-    badgeBg: "bg-emerald-100 dark:bg-emerald-950/60",
-    badgeText: "text-emerald-600 dark:text-emerald-300",
-    buttonStyle:
-      "bg-emerald-600 hover:bg-emerald-500 text-white shadow-emerald-600/25",
+    extraFeatures: [
+      "Custom Webhooks & API Integration",
+      "Advanced Team Analytics Dashboard",
+      "SLA-backed 24/7 Support",
+    ],
     isPopular: false,
+    buttonText: "Contact Sales",
   },
 ];
 
-function PricingContent() {
+export default function PricingPage() {
+  const [isYearly, setIsYearly] = useState(true);
+
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24 flex flex-col items-center justify-center">
-      <div className="text-center max-w-2xl space-y-3 mb-16">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24 transition-colors duration-300">
+      {/* Header Section */}
+      <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
         <span className="px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full text-purple-600 dark:text-purple-400 text-xs font-semibold uppercase tracking-wider">
           Flexible Pricing
         </span>
-        <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          Simple, transparent plans for your forms
+        <h1 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
+          Simple Plans,{" "}
+          <span className="text-purple-600 dark:text-purple-400">
+            Maximum Learning
+          </span>
         </h1>
         <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-          Choose the perfect plan to generate smart AI forms, track submissions,
-          and scale your workflow effortlessly.
+          Start for free with full diagnostics, or upgrade to unlock unlimited
+          skill proofing and real-time job readiness analysis.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+      {/* Monthly / Yearly Toggle Switch */}
+      <div className="flex justify-center mb-16">
+        <div className="p-1 bg-slate-200 dark:bg-slate-900 rounded-full border border-slate-300 dark:border-slate-800 flex items-center shadow-inner">
+          <button
+            onClick={() => setIsYearly(false)}
+            className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${
+              !isYearly
+                ? "bg-white text-slate-950 dark:bg-white dark:text-slate-950 shadow-md"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
+          >
+            Monthly
+          </button>
+          <button
+            onClick={() => setIsYearly(true)}
+            className={`px-6 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
+              isYearly
+                ? "bg-purple-600 text-white shadow-md shadow-purple-500/30"
+                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+            }`}
+          >
+            <span>Yearly</span>
+            <span
+              className={`px-2 py-0.5 text-[9px] font-black uppercase rounded-full transition-colors ${
+                isYearly
+                  ? "bg-white/20 text-white"
+                  : "bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300"
+              }`}
+            >
+              Save 20%
+            </span>
+          </button>
+        </div>
+      </div>
+
+      {/* Cards Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full items-center">
         {PRICING_PLANS.map((plan, index) => (
-          <PricingCard key={index} {...plan} />
+          <PricingCard
+            key={index}
+            {...plan}
+            billingPeriod={isYearly ? "/ year" : "/ month"}
+            price={
+              isYearly
+                ? plan.price
+                : `$${Math.round(parseInt(plan.price.replace("$", "")) / 10)}`
+            }
+          />
         ))}
       </div>
-
-      <div className="w-full mt-24">
-        <TrustBadge />
-      </div>
-
-      <div className="w-full mt-24">
-        <PricingFAQ />
-      </div>
     </div>
-  );
-}
-
-export default function PricingPage() {
-  return (
-    <Suspense fallback={<Loader text="Loading Pricing Plans..." />}>
-      <PricingContent />
-    </Suspense>
   );
 }
