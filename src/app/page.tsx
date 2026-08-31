@@ -4,6 +4,7 @@ import HowItWorks from "@/components/home/HowItWorks";
 import FAQSection from "@/components/home/FAQSection";
 import CTASection from "@/components/home/CTASection";
 import FeatureFlow from "@/components/home/FeatureFlow";
+import EngineeringPillarsSection from "@/components/home/EngineeringPillarsSection";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-20 w-full py-16">
         <FeatureFlow />
         <FeaturesSection />
+        <EngineeringPillarsSection />
         <HowItWorks />
         <FAQSection />
         <CTASection />
