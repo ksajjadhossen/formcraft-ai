@@ -1,77 +1,122 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import PricingCard from "@/components/pricing/PricingCard";
 
-const PRICING_PLANS = [
-  {
-    title: "Starter",
-    price: "$0",
-    billingPeriod: "/ year",
-    description: "Find your baseline. Start free.",
-    features: [
-      "Career Readiness Twin Diagnostics",
-      "Standard Career Roadmap Generator",
-      "Basic Skill-Gap Analysis",
-      "Community Forum Support",
-    ],
-    extraFeatures: [
-      "Access to basic public templates",
-      "Weekly newsletter insights",
-    ],
-    isPopular: false,
-    buttonText: "Get Started",
-  },
-  {
-    title: "Pro Career OS",
-    price: "$199",
-    priceId: "price_1U8fLGAjhqU0SLBvjH2i28QP",
-    billingPeriod: "/ year",
-    description: "Everything you need to become job-ready.",
-    features: [
-      "Unlimited Skill Proof Graphing",
-      "Automated Learning Debt Resolution",
-      "Job Reality Check & ID Scanning",
-      "AI Copilot Memory & Guidance",
-      "Zero-Guilt Adaptive Recovery",
-    ],
-    extraFeatures: [
-      "Priority Gemini AI Generation",
-      "1-on-1 AI Mock Interview Sessions",
-      "Exclusive Pro Badge on Profile",
-    ],
-    isPopular: true,
-    buttonText: "Get Started",
-  },
-  {
-    title: "Enterprise",
-    price: "$699",
-    priceId: "price_1U8fM6AjhqU0SLBvXBeYCteO",
-    billingPeriod: "/ year",
-    description: "For bootcamps and university cohorts.",
-    features: [
-      "Unlimited Organization Members",
-      "All Pro Features Included",
-      "Recruiter Candidate Verification Portal",
-      "Custom Career Roadmap Templates",
-      "Dedicated Account Manager",
-    ],
-    extraFeatures: [
-      "Custom Webhooks & API Integration",
-      "Advanced Team Analytics Dashboard",
-      "SLA-backed 24/7 Support",
-    ],
-    isPopular: false,
-    buttonText: "Contact Sales",
-  },
-];
-
 export default function PricingSection() {
-  const [isYearly, setIsYearly] = useState(true);
+  const [loadingKey, setLoadingKey] = useState<string | null>(null);
+
+  const plans = [
+    {
+      id: "starter",
+      name: "Starter",
+      price: "$0",
+      priceId: "free-tier",
+      period: "/ month",
+      billed: "billed monthly",
+      description: "Find your baseline. Start free.",
+      coreFeatures: [
+        "Career Readiness Twin Diagnostics",
+        "Standard Career Roadmap Generator",
+        "Basic Skill-Gap Analysis",
+        "Community Forum Support",
+      ],
+      advancedPerks: [
+        "Access to basic public templates",
+        "Weekly newsletter insights",
+      ],
+      popular: false,
+      buttonText: "Get Started",
+    },
+    {
+      id: "pro",
+      name: "Pro Career OS",
+      price: "$19",
+      priceId:
+        process.env.NEXT_PUBLIC_PRO_MONTHLY_PRICE_ID ||
+        "price_1U8fLGAjhqU0SLBvjH2i28QP",
+      period: "/ month",
+      billed: "billed monthly",
+      description: "Everything you need to become job-ready.",
+      coreFeatures: [
+        "Unlimited Skill Proof Graphing",
+        "Automated Learning Debt Resolution",
+        "Job Reality Check & ID Scanning",
+        "AI Copilot Memory & Guidance",
+        "Zero-Guilt Adaptive Recovery",
+      ],
+      advancedPerks: [
+        "Priority Gemini AI Generation",
+        "1-on-1 AI Mock Interview Sessions",
+        "Exclusive Pro Badge on Profile",
+      ],
+      popular: true,
+      buttonText: "Get Started",
+    },
+    {
+      id: "enterprise",
+      name: "Enterprise",
+      price: "$49",
+      priceId:
+        process.env.NEXT_PUBLIC_ENTERPRISE_MONTHLY_PRICE_ID ||
+        "price_1U8fM6AjhqU0SLBvXBeYCteO",
+      period: "/ month",
+      billed: "billed monthly",
+      description: "For bootcamps and university cohorts.",
+      coreFeatures: [
+        "Unlimited Organization Members",
+        "All Pro Features Included",
+        "Recruiter Candidate Verification Portal",
+        "Custom Career Roadmap Templates",
+        "Dedicated Account Manager",
+      ],
+      advancedPerks: [
+        "Custom Webhooks & API Integration",
+        "Advanced Team Analytics Dashboard",
+        "SLA-backed 24/7 Support",
+      ],
+      popular: false,
+      buttonText: "Contact Sales",
+    },
+  ];
+
+  const handleSelectPlan = async (plan: (typeof plans)[0]) => {
+    if (plan.id === "starter" || !plan.priceId) {
+      window.location.href = "/create-form";
+      return;
+    }
+
+    try {
+      setLoadingKey(plan.id);
+
+      const res = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ priceId: plan.priceId }),
+      });
+
+      const data = await res.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert(
+          data.error ||
+            "Failed to create checkout session. Please check Price ID in .env",
+        );
+        setLoadingKey(null);
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+      alert("Something went wrong. Please try again.");
+      setLoadingKey(null);
+    }
+  };
 
   return (
     <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-20 md:py-28 transition-colors duration-300">
-      {/* Header Section with Proper Spacing & Max-Width */}
       <div className="text-center max-w-3xl mx-auto mb-16 space-y-6">
         <span className="inline-block px-3.5 py-1 bg-purple-500/10 border border-purple-500/25 rounded-full text-purple-600 dark:text-purple-400 text-xs font-semibold uppercase tracking-wider">
           Flexible Pricing
@@ -88,53 +133,13 @@ export default function PricingSection() {
         </p>
       </div>
 
-      {/* Monthly / Yearly Toggle Switch */}
-      <div className="flex justify-center mb-16">
-        <div className="p-1 bg-slate-200 dark:bg-slate-900 rounded-full border border-slate-300 dark:border-slate-800 flex items-center shadow-inner">
-          <button
-            onClick={() => setIsYearly(false)}
-            className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${
-              !isYearly
-                ? "bg-white text-slate-950 dark:bg-white dark:text-slate-950 shadow-md"
-                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-            }`}
-          >
-            Monthly
-          </button>
-          <button
-            onClick={() => setIsYearly(true)}
-            className={`px-6 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
-              isYearly
-                ? "bg-purple-600 text-white shadow-md shadow-purple-500/30"
-                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-            }`}
-          >
-            <span>Yearly</span>
-            <span
-              className={`px-2 py-0.5 text-[9px] font-black uppercase rounded-full transition-colors ${
-                isYearly
-                  ? "bg-white/20 text-white"
-                  : "bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300"
-              }`}
-            >
-              Save 20%
-            </span>
-          </button>
-        </div>
-      </div>
-
-      {/* Cards Grid - items-stretch ensures all cards take equal height */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full items-stretch">
-        {PRICING_PLANS.map((plan, index) => (
+        {plans.map((plan) => (
           <PricingCard
-            key={index}
+            key={plan.id}
             {...plan}
-            billingPeriod={isYearly ? "/ year" : "/ month"}
-            price={
-              isYearly
-                ? plan.price
-                : `$${Math.round(parseInt(plan.price.replace("$", "")) / 10)}`
-            }
+            isLoading={loadingKey === plan.id}
+            onSelect={() => handleSelectPlan(plan)}
           />
         ))}
       </div>

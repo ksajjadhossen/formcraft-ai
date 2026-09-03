@@ -57,14 +57,14 @@ export default function CreateFormPage() {
   return (
     <div className="flex-1 w-full max-w-3xl py-16 mx-auto px-4 flex flex-col items-center justify-center mb-16 relative text-slate-900 dark:text-slate-100">
       {/* Dynamic Ambient Background Glow (Optimized for both Light & Dark modes) */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[500px] h-[200px] sm:h-[250px] bg-purple-500/10 dark:bg-purple-600/20 blur-[120px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-100 sm:w-125 h-50 sm:h-62.5 bg-purple-500/10 dark:bg-purple-600/20 blur-[120px] rounded-full pointer-events-none -z-10" />
 
       <CreateFormHeader />
 
       {/* Production-Grade Glassmorphism Card */}
       <div className="w-full relative p-6 sm:p-10 bg-white/80 dark:bg-slate-950/40 border border-slate-200/80 dark:border-white/10 rounded-3xl shadow-xl shadow-purple-900/5 dark:shadow-none backdrop-blur-2xl transition-all duration-300 mt-8 group/main">
         {/* Subtle Top Inner Border Highlight */}
-        <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500/30 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-purple-500/30 to-transparent pointer-events-none" />
 
         <form onSubmit={handleGenerate} className="space-y-6">
           {/* Label & Header Area */}
@@ -109,7 +109,7 @@ export default function CreateFormPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-purple-600/20 active:scale-[0.99] transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2.5 text-sm tracking-wide relative overflow-hidden group cursor-pointer"
+            className="w-full bg-linear-to-r from-purple-600 via-purple-500 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-purple-600/20 active:scale-[0.99] transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2.5 text-sm tracking-wide relative overflow-hidden group cursor-pointer"
           >
             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             {loading ? (
