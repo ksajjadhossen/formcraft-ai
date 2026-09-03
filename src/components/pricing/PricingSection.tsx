@@ -14,41 +14,41 @@ export default function PricingSection() {
       priceId: "free-tier",
       period: "/ month",
       billed: "billed monthly",
-      description: "Find your baseline. Start free.",
+      description: "Perfect for personal use and simple forms.",
       coreFeatures: [
-        "Career Readiness Twin Diagnostics",
-        "Standard Career Roadmap Generator",
-        "Basic Skill-Gap Analysis",
-        "Community Forum Support",
+        "Up to 5 Active Forms",
+        "100 Submissions per Form",
+        "Shareable Public Links",
+        "Real-time Live Responses View",
       ],
       advancedPerks: [
-        "Access to basic public templates",
-        "Weekly newsletter insights",
+        "Standard Export Options (CSV, JSON)",
+        "Basic Form Templates",
       ],
       popular: false,
       buttonText: "Get Started",
     },
     {
       id: "pro",
-      name: "Pro Career OS",
+      name: "Pro Form OS",
       price: "$19",
       priceId:
         process.env.NEXT_PUBLIC_PRO_MONTHLY_PRICE_ID ||
         "price_1U8fLGAjhqU0SLBvjH2i28QP",
       period: "/ month",
       billed: "billed monthly",
-      description: "Everything you need to become job-ready.",
+      description: "For professionals and growing businesses.",
       coreFeatures: [
-        "Unlimited Skill Proof Graphing",
-        "Automated Learning Debt Resolution",
-        "Job Reality Check & ID Scanning",
-        "AI Copilot Memory & Guidance",
-        "Zero-Guilt Adaptive Recovery",
+        "Unlimited Active Forms",
+        "Unlimited Submissions",
+        "All 5 Export Formats (CSV, TSV, Text, JSON, PDF)",
+        "Advanced Analytics & Live Feed",
+        "Custom Branding on Forms",
       ],
       advancedPerks: [
-        "Priority Gemini AI Generation",
-        "1-on-1 AI Mock Interview Sessions",
-        "Exclusive Pro Badge on Profile",
+        "Priority AI Form Generation",
+        "Priority Email Support",
+        "Exclusive Pro Badge",
       ],
       popular: true,
       buttonText: "Get Started",
@@ -62,17 +62,17 @@ export default function PricingSection() {
         "price_1U8fM6AjhqU0SLBvXBeYCteO",
       period: "/ month",
       billed: "billed monthly",
-      description: "For bootcamps and university cohorts.",
+      description: "For teams, agencies, and large organizations.",
       coreFeatures: [
+        "Everything in Pro Included",
         "Unlimited Organization Members",
-        "All Pro Features Included",
-        "Recruiter Candidate Verification Portal",
-        "Custom Career Roadmap Templates",
+        "Team Collaboration & Shared Forms",
+        "Custom Webhooks & API Integration",
         "Dedicated Account Manager",
       ],
       advancedPerks: [
-        "Custom Webhooks & API Integration",
-        "Advanced Team Analytics Dashboard",
+        "Advanced Security & Data Privacy",
+        "Custom Domain Mapping",
         "SLA-backed 24/7 Support",
       ],
       popular: false,
@@ -122,14 +122,14 @@ export default function PricingSection() {
           Flexible Pricing
         </span>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
-          Simple Plans,{" "}
+          Simple Forms,{" "}
           <span className="text-purple-600 dark:text-purple-400">
-            Maximum Learning
+            Powerful Exports
           </span>
         </h1>
         <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
-          Start for free with full diagnostics, or upgrade to unlock unlimited
-          skill proofing and real-time job readiness analysis.
+          Create smart forms in seconds, share the link anywhere, collect live
+          responses, and export data in 5 different formats seamlessly.
         </p>
       </div>
 
