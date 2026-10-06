@@ -50,7 +50,9 @@ async function DashboardContent() {
       <SidebarLayout />
 
       <main className="flex-1 px-6 sm:px-10 py-10 space-y-8 overflow-y-auto">
-        <DashboardHeader />
+        <div className=" my-9">
+          <DashboardHeader />
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <StatsCard
